@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #FCF9F6;
+  --color-brand-100: #F4EBE2;
+  --color-brand-200: #E6D0BA;
+  --color-brand-600: #A87D5D;
+  --color-brand-800: #5C4532;
+  --color-brand-900: #3D2D20;
+
+  --color-accent: #E2A7A7;
+  --color-accent-dark: #C68E8E;
+
+  --font-primary: 'Outfit', sans-serif;
+  --font-secondary: 'Inter', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  min-height: 100%;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-brand-50);
+  color: var(--color-brand-900);
+  font-family: var(--font-secondary);
+  overflow-x: hidden;
+  margin: 0;
+  min-height: 100%;
+  line-height: 1.5;
+}
+
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+:root {
+  --shadow-soft: 0 8px 30px rgba(50, 40, 30, 0.12);
+  --shadow-strong: 0 12px 40px rgba(30, 20, 10, 0.18);
+  --brand-gradient: linear-gradient(125deg, #f8f4ef 0%, #ffe8e0 100%);
+}
+
+.container {
+  width: min(100%, 1200px);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.section-card {
+  background: #fff;
+  border: 1px solid rgba(149, 126, 101, 0.2);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-soft);
+  padding: 2rem;
+}
+
+@media (max-width: 640px) {
+  .section-card {
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+  }
+}
+
+.shop-button,
+.shop-nav-link {
+  color: white !important;
+  background: #8a2b0d !important;
+  border-color: #7a230c !important;
+}
+
+.shop-button:hover,
+.shop-nav-link:hover {
+  background: #9b3717 !important;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
