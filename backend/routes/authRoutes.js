@@ -46,6 +46,12 @@ router.post('/admin/login', (req, res) => {
 
 // Customer Signup
 router.post('/signup', async (req, res) => {
+  if (!global.DB_AVAILABLE) {
+    return res.status(503).json({ 
+      message: 'Database is currently offline. Please check MongoDB Atlas IP whitelist (allow 0.0.0.0/0) and Render environment variables.' 
+    });
+  }
+
   try {
     console.log('Signup request:', req.body);
     const { name, email, password, phone } = req.body;
@@ -93,7 +99,7 @@ router.post('/signup', async (req, res) => {
     });
   } catch (error) {
     console.error('Signup error:', error);
-    res.status(500).json({ message: 'Server error during signup' });
+    res.status(500).json({ message: 'Server error during signup', details: error.message });
   }
 });
 
