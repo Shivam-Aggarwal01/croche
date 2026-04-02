@@ -10,7 +10,7 @@ const fallbackProducts = [
     name: 'Cozy Almond Sweater',
     description: 'Soft hand-knitted acrylic with earthy tones',
     price: 1650,
-    images: ['/images/fallback-sweater.jpg'],
+    images: ['/images/sweater.png'],
     inStock: true,
   },
   {
@@ -18,7 +18,7 @@ const fallbackProducts = [
     name: 'Classic Cream Crochet Top',
     description: 'Perfect for a stylish spring look',
     price: 2100,
-    images: ['/images/fallback-top.jpg'],
+    images: ['/images/top.png'],
     inStock: true,
   },
 ];
