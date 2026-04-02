@@ -9,11 +9,5 @@ export const getImageUrl = (url) => {
     return url;
   }
   
-  // On Render, the local /uploads/ folder is wiped on restart.
-  // We should fallback to placeholder for any old /uploads/ paths in production.
-  if (url.startsWith('/uploads/') && !API_BASE_URL.includes('localhost')) {
-    return '/placeholder.png';
-  }
-  
   return `${API_BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
 };
