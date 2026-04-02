@@ -27,7 +27,8 @@ router.post('/', authMiddleware, upload.single('referenceImage'), async (req, re
     name: req.body.name,
     description: req.body.description,
     measurements: req.body.measurements,
-    referenceImage: req.file ? `/uploads/${req.file.filename}` : req.body.referenceImage,
+    // With multer-storage-cloudinary, req.file.path contains the full URL
+    referenceImage: req.file ? req.file.path : req.body.referenceImage,
   };
 
   const request = new CustomRequest(requestObj);

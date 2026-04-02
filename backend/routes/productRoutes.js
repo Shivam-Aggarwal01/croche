@@ -60,7 +60,8 @@ router.post('/upload', upload.single('image'), (req, res) => {
     return res.status(400).json({ message: 'No image uploaded' });
   }
 
-  const imageUrl = `/uploads/${req.file.filename}`;
+  // With multer-storage-cloudinary, req.file.path contains the full URL
+  const imageUrl = req.file.path;
   return res.status(201).json({ imageUrl });
 });
 
