@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
+import API_BASE_URL from '../config/api';
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -18,7 +19,7 @@ export default function Auth() {
     setError('');
     setLoading(true);
 
-    const url = isLogin ? 'http://localhost:5000/api/auth/login' : 'http://localhost:5000/api/auth/signup';
+    const url = isLogin ? `${API_BASE_URL}/api/auth/login` : `${API_BASE_URL}/api/auth/signup`;
     
     try {
       const res = await fetch(url, {

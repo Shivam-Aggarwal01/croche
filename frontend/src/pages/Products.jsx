@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { getImageUrl } from '../utils/imageUtils';
+import API_BASE_URL from '../config/api';
 
 const container = {
   hidden: { opacity: 0 },
@@ -28,7 +29,7 @@ export default function Products() {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 6000);
         
-        const res = await fetch('http://localhost:5000/api/products', { signal: controller.signal });
+        const res = await fetch(`${API_BASE_URL}/api/products`, { signal: controller.signal });
         clearTimeout(timeoutId);
         
         if (!res.ok) throw new Error('Database Offline');

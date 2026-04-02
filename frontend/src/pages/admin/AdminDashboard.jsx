@@ -3,6 +3,7 @@ import { Package, ShoppingBag, Users, MessageSquare, Menu, Plus, Trash2, LogOut 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { getImageUrl } from '../../utils/imageUtils';
+import API_BASE_URL from '../../config/api';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -43,8 +44,8 @@ export default function AdminDashboard() {
   const fetchStats = async () => {
     try {
       const [orderStatsRes, requestStatsRes] = await Promise.all([
-        fetch('http://localhost:5000/api/orders/stats'),
-        fetch('http://localhost:5000/api/requests/stats')
+        fetch(`${API_BASE_URL}/api/orders/stats`),
+        fetch(`${API_BASE_URL}/api/requests/stats`)
       ]);
 
       const orderStats = orderStatsRes.ok ? await orderStatsRes.json() : { activeOrders: 0, totalCustomers: 0 };
@@ -68,7 +69,7 @@ export default function AdminDashboard() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/products');
+      const res = await fetch(`${API_BASE_URL}/api/products`);
       const data = await res.json();
       setProducts(data);
     } catch (e) {
@@ -78,7 +79,7 @@ export default function AdminDashboard() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/orders');
+      const res = await fetch(`${API_BASE_URL}/api/orders`);
       const data = await res.json();
       setOrders(data);
     } catch (e) {
@@ -88,7 +89,7 @@ export default function AdminDashboard() {
 
   const fetchRequests = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/requests');
+      const res = await fetch(`${API_BASE_URL}/api/requests`);
       const data = await res.json();
       setRequests(data);
     } catch (e) {
@@ -104,7 +105,7 @@ export default function AdminDashboard() {
 
     setUploading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/products/upload', {
+      const res = await fetch(`${API_BASE_URL}/api/products/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -131,7 +132,7 @@ export default function AdminDashboard() {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/products', {
+      const res = await fetch(`${API_BASE_URL}/api/products`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -155,7 +156,7 @@ export default function AdminDashboard() {
   const handleDeleteProduct = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/products/${id}`, {
         method: 'DELETE',
       });
       if (res.ok) {
@@ -173,7 +174,7 @@ export default function AdminDashboard() {
   const updateOrderStatus = async (id, status) => {
     try {
       if (status === 'Delivered') {
-        const deleteRes = await fetch(`http://localhost:5000/api/orders/${id}`, {
+        const deleteRes = await fetch(`${API_BASE_URL}/api/orders/${id}`, {
           method: 'DELETE',
         });
 
@@ -188,7 +189,7 @@ export default function AdminDashboard() {
         return;
       }
 
-      const res = await fetch(`http://localhost:5000/api/orders/${id}/status`, {
+      const res = await fetch(`${API_BASE_URL}/api/orders/${id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
@@ -208,7 +209,7 @@ export default function AdminDashboard() {
 
   const updateRequestStatus = async (id, status) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/requests/${id}/status`, {
+      const res = await fetch(`${API_BASE_URL}/api/requests/${id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),

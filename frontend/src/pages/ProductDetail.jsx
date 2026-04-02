@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import { getImageUrl } from '../utils/imageUtils';
 import { useAuth } from '../context/AuthContext';
+import API_BASE_URL from '../config/api';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -23,7 +24,7 @@ export default function ProductDetail() {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/products/${id}`);
+        const res = await fetch(`${API_BASE_URL}/api/products/${id}`);
         const data = await res.json();
         setProduct(data);
       } catch (err) {

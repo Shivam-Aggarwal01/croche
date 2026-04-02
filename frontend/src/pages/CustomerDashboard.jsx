@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Package, LogOut, ChevronRight } from 'lucide-react';
 import { getImageUrl } from '../utils/imageUtils';
+import API_BASE_URL from '../config/api';
 
 export default function CustomerDashboard() {
   const { user, token, logout } = useAuth();
@@ -19,7 +20,7 @@ export default function CustomerDashboard() {
 
     const fetchOrders = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/orders/user/${user._id}`);
+        const res = await fetch(`${API_BASE_URL}/api/orders/user/${user._id}`);
         if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
         setOrders(data);

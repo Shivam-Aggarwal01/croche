@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Package, Truck, CheckCircle, Clock } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import API_BASE_URL from '../config/api';
 
 export default function OrderTracking() {
   const [order, setOrder] = useState(null);
@@ -22,7 +23,7 @@ export default function OrderTracking() {
     const fetchOrder = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`http://localhost:5000/api/orders/${orderId}`);
+        const res = await fetch(`${API_BASE_URL}/api/orders/${orderId}`);
         if (!res.ok) throw new Error('Order not found');
         const data = await res.json();
         setOrder(data);

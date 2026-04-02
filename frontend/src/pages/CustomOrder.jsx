@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import API_BASE_URL from '../config/api';
 
 export default function CustomOrder() {
   const [form, setForm] = useState({ name: '', description: '', measurements: '' });
@@ -26,7 +27,7 @@ export default function CustomOrder() {
     if (file) payload.append('referenceImage', file);
 
     try {
-      const res = await fetch('http://localhost:5000/api/requests', {
+      const res = await fetch(`${API_BASE_URL}/api/requests`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`

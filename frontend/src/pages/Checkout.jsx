@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext';
 import { Trash2, Plus, Minus } from 'lucide-react';
 import { getImageUrl } from '../utils/imageUtils';
 import { useAuth } from '../context/AuthContext';
+import API_BASE_URL from '../config/api';
 
 export default function Checkout() {
   const { cartItems, cartTotal, clearCart, removeItem, updateQuantity } = useCart();
@@ -71,7 +72,7 @@ export default function Checkout() {
     };
 
     try {
-      const res = await fetch('http://localhost:5000/api/orders', {
+      const res = await fetch(`${API_BASE_URL}/api/orders`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
