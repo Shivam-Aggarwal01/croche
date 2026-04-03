@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import API_BASE_URL from '../config/api';
 
 export default function CustomOrder() {
-  const [form, setForm] = useState({ name: '', description: '', measurements: '' });
+  const [form, setForm] = useState({ name: '', description: '', measurements: '', phone: '' });
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState('');
   const { user, token } = useAuth();
@@ -24,6 +24,7 @@ export default function CustomOrder() {
     payload.append('name', form.name);
     payload.append('description', form.description);
     payload.append('measurements', form.measurements);
+    payload.append('phone', form.phone);
     if (file) payload.append('referenceImage', file);
 
     try {
@@ -37,7 +38,7 @@ export default function CustomOrder() {
 
       if (!res.ok) throw new Error('Request failed');
       setStatus('Request submitted successfully!');
-      setForm({ name: '', description: '', measurements: '' });
+      setForm({ name: '', description: '', measurements: '', phone: '' });
       setFile(null);
     } catch (err) {
       console.error(err);
@@ -61,6 +62,19 @@ export default function CustomOrder() {
               onChange={(e)=>handleChange('name', e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-brand-50"
               placeholder="Jane Doe"
+              required 
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-brand-900" htmlFor="phone">Phone Number</label>
+            <input 
+              id="phone"
+              type="tel"
+              value={form.phone}
+              onChange={(e)=>handleChange('phone', e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-brand-50"
+              placeholder="Phone Number"
               required 
             />
           </div>

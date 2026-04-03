@@ -27,6 +27,7 @@ router.post('/', authMiddleware, upload.single('referenceImage'), async (req, re
     name: req.body.name,
     description: req.body.description,
     measurements: req.body.measurements,
+    phone: req.body.phone,
     // Cloudinary returns full URL in req.file.path, local disk uses req.file.filename
     referenceImage: req.file
       ? (req.file.path && req.file.path.startsWith('http') ? req.file.path : `/uploads/${req.file.filename}`)

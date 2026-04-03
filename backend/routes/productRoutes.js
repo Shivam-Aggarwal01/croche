@@ -60,10 +60,8 @@ router.post('/upload', upload.single('image'), (req, res) => {
     return res.status(400).json({ message: 'No image uploaded' });
   }
 
-  // Cloudinary returns full URL in req.file.path, local disk uses req.file.filename
-  const imageUrl = req.file.path && req.file.path.startsWith('http')
-    ? req.file.path
-    : `/uploads/${req.file.filename}`;
+  // With multer-storage-cloudinary, req.file.path contains the full URL
+  const imageUrl = req.file.path;
   return res.status(201).json({ imageUrl });
 });
 

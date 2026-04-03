@@ -545,7 +545,7 @@ export default function AdminDashboard() {
                               <p className="text-slate-500 font-medium">Name & Contact</p>
                               <p className="font-bold text-slate-900">{r.user.name}</p>
                               <p className="text-slate-700">{r.user.email}</p>
-                              <p className="text-slate-700">{r.user.phone || 'Phone: N/A'}</p>
+                              <p className="text-slate-700">{r.phone || r.user.phone || 'Phone: N/A'}</p>
                             </div>
                             <div>
                               <p className="text-slate-500 font-medium">Address</p>
