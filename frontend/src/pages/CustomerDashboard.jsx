@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Package, LogOut, ChevronRight } from 'lucide-react';
-import { getImageUrl } from '../utils/imageUtils';
+import { getFirstImage, getImageUrl } from '../utils/imageUtils';
 import API_BASE_URL from '../config/api';
 
 export default function CustomerDashboard() {
@@ -105,7 +105,7 @@ export default function CustomerDashboard() {
                 <div className="p-6">
                   <div className="space-y-4">
                     {order.items.map((item, idx) => {
-                      const mainImage = item.product?.images?.[0] || item.product?.image || item.product?.thumbnail;
+                      const mainImage = getFirstImage(item.product?.images) || item.product?.image || item.product?.thumbnail;
                       return (
                       <div key={idx} className="flex gap-5 items-center">
                         <img 

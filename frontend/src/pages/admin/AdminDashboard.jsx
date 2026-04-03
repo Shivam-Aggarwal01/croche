@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Package, ShoppingBag, Users, MessageSquare, Menu, Plus, Trash2, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { getImageUrl } from '../../utils/imageUtils';
+import { getFirstImage, getImageUrl } from '../../utils/imageUtils';
 import API_BASE_URL from '../../config/api';
 
 export default function AdminDashboard() {
@@ -363,7 +363,7 @@ export default function AdminDashboard() {
                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {products.length === 0 ? <p className="text-slate-500">No products found. Start by adding some.</p> : null}
                       {products.map(p => {
-                        const mainImage = (p.images && p.images[0]) || p.image || p.thumbnail;
+                        const mainImage = getFirstImage(p.images) || p.image || p.thumbnail;
                         return (
                         <div key={p._id} className="border border-slate-200 p-4 rounded-md flex items-center gap-4">
                       {mainImage ? (
@@ -455,8 +455,8 @@ export default function AdminDashboard() {
                                 <div className="space-y-3">
                                   {o.items?.map((item, idx) => (
                                     <div key={idx} className="flex gap-4 p-3 bg-white border border-slate-200 rounded-md shadow-sm items-center">
-                                      {item.product?.images?.[0] ? (
-                                        <img src={getImageUrl(item.product.images[0])} className="w-16 h-16 rounded-lg object-cover bg-slate-50" />
+                                      {getFirstImage(item.product?.images) ? (
+                                        <img src={getImageUrl(getFirstImage(item.product.images))} className="w-16 h-16 rounded-lg object-cover bg-slate-50" />
                                       ) : (
                                         <div className="w-16 h-16 rounded-lg bg-slate-100 flex items-center justify-center"><Package className="text-slate-400" size={20}/></div>
                                       )}

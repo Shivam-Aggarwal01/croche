@@ -2,7 +2,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
-import { getImageUrl } from '../utils/imageUtils';
+import { getFirstImage, getImageUrl } from '../utils/imageUtils';
 import { useAuth } from '../context/AuthContext';
 import API_BASE_URL from '../config/api';
 
@@ -56,7 +56,7 @@ export default function ProductDetail() {
         >
           <div className="w-full aspect-[4/5] bg-brand-100 rounded-[2rem] overflow-hidden relative shadow-2xl shadow-brand-900/10">
              {(() => {
-               const mainImage = (product.images && product.images[0]) || product.image || product.thumbnail;
+               const mainImage = getFirstImage(product.images) || product.image || product.thumbnail;
                return mainImage ? (
                  <img src={getImageUrl(mainImage)} alt={product.name} className="w-full h-full object-cover" />
                ) : null;
@@ -170,7 +170,7 @@ export default function ProductDetail() {
                 price: product.price,
                 size: isCustom ? 'Custom' : size,
                 quantity,
-                image: product.images?.[0] || '',
+                image: getFirstImage(product.images) || product.image || product.thumbnail || '',
                 comments
               });
               setFeedback('Added to cart successfully!');

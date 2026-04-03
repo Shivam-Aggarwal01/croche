@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { getImageUrl } from '../utils/imageUtils';
+import { getFirstImage, getImageUrl } from '../utils/imageUtils';
 import API_BASE_URL from '../config/api';
 
 const container = {
@@ -80,7 +80,7 @@ export default function Products() {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10"
         >
           {products.map((p) => {
-            const mainImage = (p.images && p.images[0]) || p.image || p.thumbnail;
+            const mainImage = getFirstImage(p.images) || p.image || p.thumbnail;
             return (
             <motion.div variants={itemAnim} key={p._id}>
               <Link to={`/products/${p._id}`} className="group block h-full">
