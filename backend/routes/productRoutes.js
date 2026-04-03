@@ -76,6 +76,44 @@ router.post('/upload', upload.single('image'), (req, res) => {
   return res.status(201).json({ imageUrl });
 });
 
+// One-time utility: normalize stored image paths for existing products
+// It looks for absolute server paths like `/opt/render/project/src/backend/uploads/<file>`
+// and rewrites them to `/uploads/<file>` so the frontend can build correct URLs.
+router.post('/fix-image-paths', async (req, res) => {
+  try {
+    const products = await Product.find({ images: { $exists: true, $ne: [] } });
+    let updatedCount = 0;
+
+    for (const product of products) {
+      let changed = false;
+      const newImages = (product.images || []).map((img) => {
+        if (typeof img !== 'string') return img;
+        const normalized = img.trim().replace(/\\/g, '/');
+        const uploadsIndex = normalized.indexOf('/uploads/');
+        if (uploadsIndex !== -1 && !normalized.startsWith('/uploads/')) {
+          const filePart = normalized.slice(uploadsIndex + '/uploads/'.length).replace(/^\/+/, '');
+          if (filePart) {
+            changed = true;
+            return `/uploads/${filePart}`;
+          }
+        }
+        return normalized;
+      });
+
+      if (changed) {
+        product.images = newImages;
+        await product.save();
+        updatedCount += 1;
+      }
+    }
+
+    res.json({ message: 'Image paths normalized', updatedProducts: updatedCount });
+  } catch (error) {
+    console.error('Error normalizing image paths:', error);
+    res.status(500).json({ message: 'Failed to normalize image paths' });
+  }
+});
+
 // Add a product (admin only conceptually for now)
 router.post('/', async (req, res) => {
   const product = new Product(req.body);
