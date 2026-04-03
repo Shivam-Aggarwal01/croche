@@ -79,13 +79,15 @@ export default function Products() {
           animate="show"
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10"
         >
-          {products.map((p) => (
+          {products.map((p) => {
+            const mainImage = (p.images && p.images[0]) || p.image || p.thumbnail;
+            return (
             <motion.div variants={itemAnim} key={p._id}>
               <Link to={`/products/${p._id}`} className="group block h-full">
                 <div className="w-full aspect-[4/5] bg-brand-100 rounded-3xl mb-6 overflow-hidden relative section-card transition-all duration-500 hover:-translate-y-1 hover:shadow-strong">
-                  {p.images && p.images[0] ? (
+                  {mainImage ? (
                     <img 
-                      src={getImageUrl(p.images[0])} 
+                      src={getImageUrl(mainImage)} 
                       alt={p.name} 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" 
                     />
@@ -100,7 +102,7 @@ export default function Products() {
                 </div>
               </Link>
             </motion.div>
-          ))}
+          )})}
         </motion.div>
       )}
     </div>

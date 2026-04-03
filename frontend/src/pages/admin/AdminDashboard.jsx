@@ -362,10 +362,12 @@ export default function AdminDashboard() {
                <h3 className="text-xl font-bold text-slate-900 mb-6">Database Items</h3>
                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {products.length === 0 ? <p className="text-slate-500">No products found. Start by adding some.</p> : null}
-                  {products.map(p => (
-                    <div key={p._id} className="border border-slate-200 p-4 rounded-md flex items-center gap-4">
-                      {p.images && p.images[0] ? (
-                        <div className="w-16 h-16 rounded-md bg-slate-50 overflow-hidden"><img src={getImageUrl(p.images[0])} className="w-full h-full object-cover"/></div>
+                      {products.map(p => {
+                        const mainImage = (p.images && p.images[0]) || p.image || p.thumbnail;
+                        return (
+                        <div key={p._id} className="border border-slate-200 p-4 rounded-md flex items-center gap-4">
+                      {mainImage ? (
+                        <div className="w-16 h-16 rounded-md bg-slate-50 overflow-hidden"><img src={getImageUrl(mainImage)} className="w-full h-full object-cover"/></div>
                       ) : (
                         <div className="w-16 h-16 rounded-md bg-slate-100 flex items-center justify-center"><Package className="text-slate-400"/></div>
                       )}
@@ -381,7 +383,7 @@ export default function AdminDashboard() {
                         <Trash2 size={20} />
                       </button>
                     </div>
-                  ))}
+                  )})}
                </div>
             </div>
           </motion.div>

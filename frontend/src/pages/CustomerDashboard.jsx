@@ -104,10 +104,12 @@ export default function CustomerDashboard() {
 
                 <div className="p-6">
                   <div className="space-y-4">
-                    {order.items.map((item, idx) => (
+                    {order.items.map((item, idx) => {
+                      const mainImage = item.product?.images?.[0] || item.product?.image || item.product?.thumbnail;
+                      return (
                       <div key={idx} className="flex gap-5 items-center">
                         <img 
-                          src={getImageUrl(item.product?.images?.[0])} 
+                          src={getImageUrl(mainImage)} 
                           alt="product" 
                           className="w-20 h-20 rounded-xl object-cover bg-brand-50 border border-brand-100"
                         />
@@ -117,7 +119,7 @@ export default function CustomerDashboard() {
                         </div>
                         <p className="font-bold text-brand-900 text-lg">₹{item.priceAtTime * item.quantity}</p>
                       </div>
-                    ))}
+                    )})}
                   </div>
                   <div className="mt-6 pt-6 border-t border-brand-100 flex justify-end">
                     <button 

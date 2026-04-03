@@ -55,9 +55,12 @@ export default function ProductDetail() {
           className="space-y-6"
         >
           <div className="w-full aspect-[4/5] bg-brand-100 rounded-[2rem] overflow-hidden relative shadow-2xl shadow-brand-900/10">
-             {product.images && product.images[0] ? (
-                 <img src={getImageUrl(product.images[0])} alt={product.name} className="w-full h-full object-cover" />
-             ) : null}
+             {(() => {
+               const mainImage = (product.images && product.images[0]) || product.image || product.thumbnail;
+               return mainImage ? (
+                 <img src={getImageUrl(mainImage)} alt={product.name} className="w-full h-full object-cover" />
+               ) : null;
+             })()}
           </div>
         </motion.div>
 
