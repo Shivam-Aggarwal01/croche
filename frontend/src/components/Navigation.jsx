@@ -16,7 +16,7 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-20">
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="text-xl sm:text-2xl lg:text-3xl font-black text-brand-900 tracking-tight">
-              The Cozy coccoon
+              The Cozy Coccoon
             </Link>
           </div>
           

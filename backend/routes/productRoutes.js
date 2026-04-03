@@ -61,7 +61,18 @@ router.post('/upload', upload.single('image'), (req, res) => {
   }
 
   // With multer-storage-cloudinary, req.file.path contains the full URL
-  const imageUrl = req.file.path;
+  const filePath = req.file.path;
+  let imageUrl = filePath;
+
+  // When using local disk storage (Render filesystem is ephemeral),
+  // req.file.path is an absolute server path like:
+  // /opt/render/project/src/backend/uploads/<file>
+  // Convert it into a URL we can serve via `app.use('/uploads', express.static(...))`.
+  if (typeof imageUrl === 'string' && !imageUrl.startsWith('http')) {
+    const fileName = req.file.filename || path.basename(imageUrl);
+    imageUrl = `/uploads/${fileName}`;
+  }
+
   return res.status(201).json({ imageUrl });
 });
 
