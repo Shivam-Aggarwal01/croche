@@ -48,6 +48,21 @@ app.use('/api/requests', requestRoutes);
 app.use('/api/auth', authRoutes);
 
 // Serve uploaded files directly
+// Some products may store an absolute filesystem path (e.g. Render):
+// /opt/render/.../src/backend/uploads/<file>
+// If the frontend still requests that URL, rewrite it to the correct
+// served static path: /uploads/<file>.
+app.use((req, res, next) => {
+  if (typeof req.url === 'string' && req.url.includes('/backend/uploads/')) {
+    const filePart = req.url.split('/backend/uploads/')[1];
+    if (filePart) {
+      const file = String(filePart).replace(/^\/+/, '');
+      req.url = `/uploads/${file}`;
+    }
+  }
+  next();
+});
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Basic route

@@ -5,7 +5,6 @@ global.DB_AVAILABLE = false;
 
 async function connectDatabase() {
   try {
-    // Use MONGO_URI from .env, fallback to local
     const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/cozycacoon';
     
     console.log('Attempting MongoDB connection...');
@@ -32,7 +31,7 @@ async function connectDatabase() {
       return false;
     }
 
-    // Try local fallback only if no cloud URI configured
+
     console.log('Attempting local MongoDB fallback...');
     try {
       await mongoose.connect('mongodb://localhost:27017/cozycacoon', {
